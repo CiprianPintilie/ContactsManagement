@@ -5,23 +5,24 @@ namespace BusinessLayer.Mapping
 {
     public static class ContactMapper
     {
-        public static ContactEntity ToEntity(this ContactModel contact)
+        public static ContactEntity ToEntity(this ContactModel contactModel)
         {
             return new ContactEntity
             {
-                FirstName = contact.FirstName,
-                LastName = contact.LastName,
-                Type = contact.Type,
-                Vat = contact.Vat,
+                EmailAddress = contactModel.EmailAddress,
+                FirstName = contactModel.FirstName,
+                LastName = contactModel.LastName,
+                Type = contactModel.Type,
+                Vat = contactModel.Vat,
                 Address = new AddressEntity
                 {
                     MainAddress = true,
-                    Id = contact.Address.Id,
-                    City = contact.Address.City,
-                    Country = contact.Address.Country,
-                    PostCode = contact.Address.PostCode,
-                    Street = contact.Address.Street,
-                    StreetNumber = contact.Address.StreetNumber
+                    Id = contactModel.Address.Id,
+                    City = contactModel.Address.City,
+                    Country = contactModel.Address.Country,
+                    PostCode = contactModel.Address.PostCode,
+                    Street = contactModel.Address.Street,
+                    StreetNumber = contactModel.Address.StreetNumber
                 }
             };
         }
@@ -31,6 +32,7 @@ namespace BusinessLayer.Mapping
             return new ContactModel
             {
                 Id = contactEntity.Id,
+                EmailAddress = contactEntity.EmailAddress,
                 FirstName = contactEntity.FirstName,
                 LastName = contactEntity.LastName,
                 Type = contactEntity.Type,

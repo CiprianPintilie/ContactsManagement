@@ -44,6 +44,10 @@ namespace DataAccessLayer
 
             });
 
+            modelBuilder.Entity<ContactEntity>()
+                .HasIndex(contact => contact.EmailAddress)
+                .IsUnique();
+
             modelBuilder.Entity<ContactCompanyEntity>()
                 .HasKey(contactCompany => new
                 {

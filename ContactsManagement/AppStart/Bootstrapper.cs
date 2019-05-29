@@ -17,6 +17,7 @@ namespace ContactsManagement.AppStart
         private static void RegisterDataAccessServices(IServiceCollection services)
         {
             services.AddScoped<IContactCommand, ContactCommand>();
+            services.AddScoped<IContactQuery, ContactQuery>();
         }
 
         private static void RegisterBusinessServices(IServiceCollection services)
