@@ -15,6 +15,7 @@ namespace ContactsManagement
     public class Startup
     {
         private readonly ILogger<Startup> _logger;
+        private bool _inMemoryDatabase;
 
         public IConfiguration Configuration { get; }
 
@@ -41,16 +42,17 @@ namespace ContactsManagement
             app.UseSwaggerUI(options =>
                 options.SwaggerEndpoint(Configuration.GetSection("Swagger:Uri").Value, "Contacts management API"));
 
-            UpdateDatabase(app);
+            if (!_inMemoryDatabase)
+                UpdateDatabase(app);
 
             app.UseMvc();
         }
 
         private void ConfigureDbContext(IServiceCollection services)
         {
-            var useInMemoryDb = Configuration.GetSection("Database:ContactsManagementDatabase:UseInMemoryDatabase").Get<bool>();
+            var inMemoryDatabase = Configuration.GetSection("Database:ContactsManagementDatabase:UseInMemoryDatabase").Get<bool>();
 
-            if (useInMemoryDb)
+            if (inMemoryDatabase)
             {
                 _logger.LogInformation("Using in memory database");
                 services.AddDbContext<ContactsManagementDbContext>(options =>
@@ -61,7 +63,8 @@ namespace ContactsManagement
                 services.AddDbContext<ContactsManagementDbContext>(options =>
                     options.UseSqlServer(Configuration.GetSection("Database:ContactsManagementDatabase:ConnectionString").Value));
             }
-            
+
+            _inMemoryDatabase = inMemoryDatabase;
         }
 
         private void ConfigureSwagger(IServiceCollection services)
