@@ -41,6 +41,8 @@ namespace ContactsManagement
             app.UseSwaggerUI(options =>
                 options.SwaggerEndpoint(Configuration.GetSection("Swagger:Uri").Value, "Contacts management API"));
 
+            UpdateDatabase(app);
+
             app.UseMvc();
         }
 
@@ -74,6 +76,18 @@ namespace ContactsManagement
                     options.IncludeXmlComments(xmlFilePath);
                 }
             );
+        }
+
+        private static void UpdateDatabase(IApplicationBuilder app)
+        {
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                using (var context = scope.ServiceProvider.GetRequiredService<ContactsManagementDbContext>())
+                {
+                    context.Database.Migrate();
+                }
+            }
+            
         }
     }
 }
