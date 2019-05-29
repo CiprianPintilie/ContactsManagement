@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace ContactsManagement
 {
     public class Startup
     {
+        private readonly ILogger<Startup> _logger;
+
         public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration)
+        public Startup(ILogger<Startup> logger, IConfiguration configuration)
         {
+            _logger = logger;
             Configuration = configuration;
         }
 
@@ -46,6 +50,7 @@ namespace ContactsManagement
 
             if (useInMemoryDb)
             {
+                _logger.LogInformation("Using in memory database");
                 services.AddDbContext<ContactsManagementDbContext>(options =>
                     options.UseInMemoryDatabase("InMemoryContactsManagement"));
             }
