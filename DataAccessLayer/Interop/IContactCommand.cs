@@ -7,5 +7,6 @@ namespace DataAccessLayer.Interop
     {
         Task CreateAsync(ContactEntity contact);
         Task UpdateAsync(int contactId, ContactEntity contact);
+        Task DeleteAsync(int contactId);
     }
 }

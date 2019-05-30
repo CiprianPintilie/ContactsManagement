@@ -89,5 +89,14 @@ namespace ContactsManagement.Controllers
 
             return Ok();
         }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _contactService.DeleteAsync(id);
+            return NoContent();
+        }
     }
 }

@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interop;
-using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Services
 {
@@ -28,6 +26,13 @@ namespace DataAccessLayer.Services
             UpdateContactProperties(contactToUpdate, contact);
             _context.Contact.Update(contactToUpdate);
 
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int contactId)
+        {
+            var contactToDelete = await _context.Contact.FindAsync(contactId);
+            _context.Contact.Remove(contactToDelete);
             await _context.SaveChangesAsync();
         }
 

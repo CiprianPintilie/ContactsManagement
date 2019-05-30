@@ -37,6 +37,11 @@ namespace BusinessLayer.Services
             await _contactCommand.UpdateAsync(id, contact.ToEntity());
         }
 
+        public async Task DeleteAsync(int id)
+        {
+            await _contactCommand.DeleteAsync(id);
+        }
+
         public async Task<ContactModel> GetByEmailAddressAsync(string emailAddress)
         {
             var contactEntity = await _contactQuery.GetByEmailAddressAsync(emailAddress);
