@@ -5,9 +5,10 @@ namespace DataAccessLayer
 {
     public class ContactsManagementDbContext : DbContext
     {
-        public virtual DbSet<AddressEntity> Address { get; set; }
         public virtual DbSet<CompanyEntity> Company { get; set; }
         public virtual DbSet<ContactEntity> Contact { get; set; }
+        public virtual DbSet<ContactCompanyEntity> ContactCompany { get; set; }
+        public virtual DbSet<CompanyAddressEntity> CompanyAddress { get; set; }
 
         public ContactsManagementDbContext()
         {
@@ -20,7 +21,7 @@ namespace DataAccessLayer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AddressEntity>(entity =>
+            modelBuilder.Entity<CompanyAddressEntity>(entity =>
             {
                 entity.HasKey(address => address.Id);
                 entity.Property(address => address.Id)
@@ -33,6 +34,19 @@ namespace DataAccessLayer
                 entity.Property(company => company.Id)
                     .ValueGeneratedOnAdd();
             });
+
+            modelBuilder.Entity<CompanyEntity>()
+                .HasIndex(company => company.Name)
+                .IsUnique();
+
+            modelBuilder.Entity<CompanyEntity>()
+                .HasIndex(company => company.Vat)
+                .IsUnique();
+
+            modelBuilder.Entity<CompanyEntity>()
+                .HasMany(company => company.Addresses)
+                .WithOne(companyAddress => companyAddress.Company)
+                .HasForeignKey(company => company.CompanyId);
 
             modelBuilder.Entity<ContactEntity>(entity =>
             {
@@ -61,23 +75,6 @@ namespace DataAccessLayer
                 .HasOne(contactCompany => contactCompany.Contact)
                 .WithMany(contact => contact.ContactCompanies)
                 .HasForeignKey(contactCompany => contactCompany.ContactId);
-
-            modelBuilder.Entity<CompanyAddressEntity>()
-                .HasKey(companyAddress => new
-                {
-                    companyAddress.CompanyId,
-                    companyAddress.AddressId
-                });
-
-            modelBuilder.Entity<CompanyAddressEntity>()
-                .HasOne(companyAddress => companyAddress.Company)
-                .WithMany(company => company.CompanyAddresses)
-                .HasForeignKey(companyAddress => companyAddress.CompanyId);
-
-            modelBuilder.Entity<CompanyAddressEntity>()
-                .HasOne(companyAddress => companyAddress.Address)
-                .WithMany(address => address.CompanyAddresses)
-                .HasForeignKey(companyAddress => companyAddress.AddressId);
         }
     }
 }

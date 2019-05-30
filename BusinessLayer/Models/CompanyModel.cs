@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataAccessLayer.Entities
+namespace BusinessLayer.Models
 {
-    public class CompanyEntity
+    public class CompanyModel
     {
         public int Id { get; set; }
         [Required]
@@ -21,8 +20,8 @@ namespace DataAccessLayer.Entities
         public string MainStreet { get; set; }
         [Required]
         public int MainStreetNumber { get; set; }
+        [Required]
 
-        public ICollection<ContactCompanyEntity> ContactCompanies { get; set; }
-        public ICollection<CompanyAddressEntity> Addresses { get; set; }
+        public CompanyAddressModel[] CompanyAddresses { get; set; }
     }
 }

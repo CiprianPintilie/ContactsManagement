@@ -18,11 +18,14 @@ namespace ContactsManagement.AppStart
         {
             services.AddScoped<IContactCommand, ContactCommand>();
             services.AddScoped<IContactQuery, ContactQuery>();
+            services.AddScoped<ICompanyCommand, CompanyCommand>();
+            services.AddScoped<ICompanyQuery, CompanyQuery>();
         }
 
         private static void RegisterBusinessServices(IServiceCollection services)
         {
             services.AddScoped<IContactService, ContactService>();
+            services.AddScoped<ICompanyService, CompanyService>();
         }
     }
 }

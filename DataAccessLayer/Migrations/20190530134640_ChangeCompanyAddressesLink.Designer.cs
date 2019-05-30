@@ -3,14 +3,16 @@ using DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(ContactsManagementDbContext))]
-    partial class ContactsManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190530134640_ChangeCompanyAddressesLink")]
+    partial class ChangeCompanyAddressesLink
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -18,7 +20,7 @@ namespace DataAccessLayer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DataAccessLayer.Entities.CompanyAddressEntity", b =>
+            modelBuilder.Entity("DataAccessLayer.Entities.AddressEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,7 +42,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("CompanyAddress");
+                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Entities.CompanyEntity", b =>
@@ -133,7 +135,7 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Contact");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Entities.CompanyAddressEntity", b =>
+            modelBuilder.Entity("DataAccessLayer.Entities.AddressEntity", b =>
                 {
                     b.HasOne("DataAccessLayer.Entities.CompanyEntity", "Company")
                         .WithMany("Addresses")
