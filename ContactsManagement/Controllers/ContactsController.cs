@@ -20,6 +20,11 @@ namespace ContactsManagement.Controllers
             _companyService = companyService;
         }
 
+        /// <summary>
+        /// Gets a contact by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -27,6 +32,11 @@ namespace ContactsManagement.Controllers
             return Ok(contact);
         }
 
+        /// <summary>
+        /// Creates a new contact
+        /// </summary>
+        /// <param name="contact"></param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(typeof(ContactModel), 201)]
         [ProducesResponseType(400)]
@@ -56,6 +66,12 @@ namespace ContactsManagement.Controllers
             return Created($"/contacts/{createdContact.Id}", createdContact);
         }
 
+        /// <summary>
+        /// Updates an existing contact
+        /// </summary>
+        /// <param name="contact"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPatch("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -90,6 +106,11 @@ namespace ContactsManagement.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Deletes a contact
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

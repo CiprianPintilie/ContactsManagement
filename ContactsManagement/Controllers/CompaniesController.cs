@@ -15,6 +15,11 @@ namespace ContactsManagement.Controllers
             _companyService = companyService;
         }
 
+        /// <summary>
+        /// Creates a new company
+        /// </summary>
+        /// <param name="company"></param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(typeof(CompanyModel), 201)]
         [ProducesResponseType(400)]
@@ -34,6 +39,12 @@ namespace ContactsManagement.Controllers
             return Created($"/companies/{createdCompany.Id}", createdCompany);
         }
 
+        /// <summary>
+        /// Updates an existing company
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="company"></param>
+        /// <returns></returns>
         [HttpPatch("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
