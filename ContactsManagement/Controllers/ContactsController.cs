@@ -26,9 +26,14 @@ namespace ContactsManagement.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(ContactModel), 200)]
+        [ProducesResponseType(typeof(ContactModel), 404)]
         public async Task<IActionResult> GetById(int id)
         {
             var contact = await _contactService.GetByIdAsync(id);
+            if (contact is null)
+                return NotFound($"No contact with the id '{id}' was found");
+
             return Ok(contact);
         }
 
@@ -116,6 +121,10 @@ namespace ContactsManagement.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int id)
         {
+            var contact = await _contactService.GetByIdAsync(id);
+            if (contact is null)
+                return NotFound($"No contact with the id '{id}' was found");
+
             await _contactService.DeleteAsync(id);
             return NoContent();
         }
