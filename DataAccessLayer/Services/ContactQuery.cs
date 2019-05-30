@@ -15,13 +15,16 @@ namespace DataAccessLayer.Services
             _context = context;
         }
 
+        public async Task<ContactEntity> GetByIdAsync(int id)
+        {
+            return await _context.Contact.FindAsync(id);
+        }
+
         public async Task<ContactEntity> GetByEmailAddressAsync(string emailAddress)
         {
-            var contact = await _context.Contact
+            return await _context.Contact
                 .Where(c => c.EmailAddress.Equals(emailAddress))
                 .SingleOrDefaultAsync();
-
-            return contact;
         }
     }
 }

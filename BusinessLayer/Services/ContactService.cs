@@ -19,6 +19,12 @@ namespace BusinessLayer.Services
             _contactQuery = contactQuery;
         }
 
+        public async Task<ContactModel> GetByIdAsync(int id)
+        {
+            var contactEntity = await _contactQuery.GetByIdAsync(id);
+            return contactEntity?.ToModel();
+        }
+
         public async Task<ContactModel> CreateAsync(ContactModel contact)
         {
             var contactEntity = contact.ToEntity();
@@ -26,11 +32,15 @@ namespace BusinessLayer.Services
             return contactEntity.ToModel();
         }
 
-        public async Task<bool> ContactExistsAsync(ContactModel contact)
+        public async Task UpdateAsync(int id, ContactModel contact)
         {
-            var contactEntity = await _contactQuery.GetByEmailAddressAsync(contact.EmailAddress);
+            await _contactCommand.UpdateAsync(id, contact.ToEntity());
+        }
 
-            return !(contactEntity is null);
+        public async Task<ContactModel> GetByEmailAddressAsync(string emailAddress)
+        {
+            var contactEntity = await _contactQuery.GetByEmailAddressAsync(emailAddress);
+            return contactEntity?.ToModel();
         }
     }
 }
