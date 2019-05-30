@@ -39,9 +39,6 @@ namespace DataAccessLayer
                 entity.HasKey(contact => contact.Id);
                 entity.Property(contact => contact.Id)
                     .ValueGeneratedOnAdd();
-                entity.HasOne(contact => contact.Address)
-                    .WithOne(address => address.Contact);
-
             });
 
             modelBuilder.Entity<ContactEntity>()

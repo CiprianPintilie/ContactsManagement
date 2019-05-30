@@ -14,16 +14,11 @@ namespace BusinessLayer.Mapping
                 LastName = contactModel.LastName,
                 Type = contactModel.Type,
                 Vat = contactModel.Vat,
-                Address = new AddressEntity
-                {
-                    MainAddress = true,
-                    Id = contactModel.Address.Id,
-                    City = contactModel.Address.City,
-                    Country = contactModel.Address.Country,
-                    PostCode = contactModel.Address.PostCode,
-                    Street = contactModel.Address.Street,
-                    StreetNumber = contactModel.Address.StreetNumber
-                }
+                City = contactModel.City,
+                Country = contactModel.Country,
+                PostCode = contactModel.PostCode,
+                Street = contactModel.Street,
+                StreetNumber = contactModel.StreetNumber
             };
         }
 
@@ -37,16 +32,11 @@ namespace BusinessLayer.Mapping
                 LastName = contactEntity.LastName,
                 Type = contactEntity.Type,
                 Vat = contactEntity.Vat,
-                Address = new AddressModel
-                {
-                    MainAddress = true,
-                    Id = contactEntity.Address.Id,
-                    City = contactEntity.Address.City,
-                    Country = contactEntity.Address.Country,
-                    PostCode = contactEntity.Address.PostCode,
-                    Street = contactEntity.Address.Street,
-                    StreetNumber = contactEntity.Address.StreetNumber
-                }
+                City = contactEntity.City,
+                Country = contactEntity.Country,
+                PostCode = contactEntity.PostCode,
+                Street = contactEntity.Street,
+                StreetNumber = contactEntity.StreetNumber
             };
         }
     }

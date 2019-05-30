@@ -18,8 +18,11 @@ namespace DataAccessLayer.Entities
         public string Type { get; set; }
         public string Vat { get; set; }
 
-        public int AddressId { get; set; }
-        public AddressEntity Address { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
+        public int PostCode { get; set; }
+        public string Street { get; set; }
+        public int StreetNumber { get; set; }
 
         public ICollection<ContactCompanyEntity> ContactCompanies { get; set; }
     }

@@ -18,6 +18,11 @@ namespace BusinessLayer.Models
         [Required]
         public string Type { get; set; }
         public string Vat { get; set; }
-        public AddressModel Address { get; set; }
+
+        public string Country { get; set; }
+        public string City { get; set; }
+        public int PostCode { get; set; }
+        public string Street { get; set; }
+        public int StreetNumber { get; set; }
     }
 }
