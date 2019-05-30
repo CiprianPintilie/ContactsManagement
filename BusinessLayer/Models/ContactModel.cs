@@ -26,5 +26,7 @@ namespace BusinessLayer.Models
         public int PostCode { get; set; }
         public string Street { get; set; }
         public int StreetNumber { get; set; }
+
+        public CompanyModel[] Companies { get; set; }
     }
 }

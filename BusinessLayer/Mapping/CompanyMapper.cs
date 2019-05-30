@@ -17,14 +17,7 @@ namespace BusinessLayer.Mapping
                 MainPostCode = companyModel.MainPostCode,
                 MainStreet = companyModel.MainStreet,
                 MainStreetNumber = companyModel.MainStreetNumber,
-                Addresses = companyModel.CompanyAddresses.Select(address => new CompanyAddressEntity
-                {
-                    Country = address.Country,
-                    City = address.City,
-                    PostCode = address.PostCode,
-                    Street = address.Street,
-                    StreetNumber = address.StreetNumber
-                }).ToList()
+                Addresses = companyModel.CompanyAddresses.Select(address => address.ToEntity()).ToList()
             };
         }
 
@@ -40,18 +33,15 @@ namespace BusinessLayer.Mapping
                 MainPostCode = companyEntity.MainPostCode,
                 MainStreet = companyEntity.MainStreet,
                 MainStreetNumber = companyEntity.MainStreetNumber,
-                CompanyAddresses = companyEntity.Addresses.Select(address => new CompanyAddressModel
-                {
-                    Id = address.Id,
-                    Country = address.Country,
-                    City = address.City,
-                    PostCode = address.PostCode,
-                    Street = address.Street,
-                    StreetNumber = address.StreetNumber
-                }).ToArray()
+                CompanyAddresses = companyEntity.Addresses.Select(address => address.ToModel()).ToArray()
             };
 
             return companyModel;
+        }
+
+        public static CompanyModel[] ToModels(this CompanyEntity[] companyEntities)
+        {
+            return companyEntities.Select(i => i.ToModel()).ToArray();
         }
     }
 }

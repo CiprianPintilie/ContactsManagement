@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interop;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Services
 {
@@ -22,7 +24,7 @@ namespace DataAccessLayer.Services
         public async Task UpdateAsync(int contactId, ContactEntity contact)
         {
             var contactToUpdate = await _context.Contact.FindAsync(contactId);
-            
+
             UpdateContactProperties(contactToUpdate, contact);
             _context.Contact.Update(contactToUpdate);
 
@@ -41,6 +43,7 @@ namespace DataAccessLayer.Services
             contactToUpdate.PostCode = contact.PostCode;
             contactToUpdate.Street = contact.Street;
             contactToUpdate.StreetNumber = contact.StreetNumber;
+            contactToUpdate.ContactCompanies = contact.ContactCompanies;
         }
     }
 }

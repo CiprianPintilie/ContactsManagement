@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using BusinessLayer.Interop;
 using BusinessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,21 @@ namespace ContactsManagement.Controllers
     public class ContactsController : ControllerBase
     {
         private readonly IContactService _contactService;
+        private readonly ICompanyService _companyService;
 
-        public ContactsController(IContactService contactService)
+        public ContactsController(
+            IContactService contactService,
+            ICompanyService companyService)
         {
             _contactService = contactService;
+            _companyService = companyService;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var contact = await _contactService.GetByIdAsync(id);
+            return Ok(contact);
         }
 
         [HttpPost]
@@ -31,6 +43,13 @@ namespace ContactsManagement.Controllers
 
             if (!(contactExists is null))
                 return Conflict($"A contact with the email address '{contact.EmailAddress}' already exist");
+
+            if (contact.Companies.Any())
+            {
+                var existingRelatedCompanies = await _companyService.GetByIdsAsync(contact.Companies.Select(i => i.Id).ToArray());
+                if (existingRelatedCompanies.Length != contact.Companies.Length)
+                    return NotFound("One or several of the provided companies does not exist");
+            }
             
             var createdContact = await _contactService.CreateAsync(contact);
 
@@ -41,7 +60,7 @@ namespace ContactsManagement.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Update(ContactModel contact, int id)
+        public async Task<IActionResult> Update([FromBody]ContactModel contact, int id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -58,6 +77,13 @@ namespace ContactsManagement.Controllers
 
             if (!(contactWithSameEmailExists is null) && contactWithSameEmailExists.Id != id)
                 return Conflict($"A contact with the email address '{contact.EmailAddress}' already exist");
+
+            if (contact.Companies.Any())
+            {
+                var existingRelatedCompanies = await _companyService.GetByIdsAsync(contact.Companies.Select(i => i.Id).ToArray());
+                if (existingRelatedCompanies.Length != contact.Companies.Length)
+                    return NotFound("One or several of the provided companies does not exist");
+            }
 
             await _contactService.UpdateAsync(id, contact);
 

@@ -26,6 +26,13 @@ namespace BusinessLayer.Services
             return company?.ToModel();
         }
 
+        public async Task<CompanyModel[]> GetByIdsAsync(int[] ids)
+        {
+            var companies = await _companyQuery.GetByIdsAsync(ids);
+
+            return companies.ToModels();
+        }
+
         public async Task<CompanyModel> CreateAsync(CompanyModel company)
         {
             var companyEntity = company.ToEntity();
