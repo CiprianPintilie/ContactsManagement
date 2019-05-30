@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BusinessLayer.Attributes;
 
 namespace BusinessLayer.Models
 {
@@ -16,6 +17,7 @@ namespace BusinessLayer.Models
         [MaxLength(50, ErrorMessage = "The provided value must not exceed 50 characters")]
         public string LastName { get; set; }
         [Required]
+        [AllowedStringValues(new []{ContactType.EMPLOYEE, ContactType.FREELANCE})]
         public string Type { get; set; }
         public string Vat { get; set; }
 

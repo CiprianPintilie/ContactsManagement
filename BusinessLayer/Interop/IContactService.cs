@@ -9,5 +9,6 @@ namespace BusinessLayer.Interop
         Task<ContactModel> GetByEmailAddressAsync(string emailAddress);
         Task<ContactModel> CreateAsync(ContactModel contact);
         Task UpdateAsync(int id, ContactModel contact);
+        bool ContactDataIsValidRegardingType(ContactModel contact);
     }
 }

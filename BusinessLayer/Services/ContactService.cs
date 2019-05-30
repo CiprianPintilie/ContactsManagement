@@ -24,7 +24,7 @@ namespace BusinessLayer.Services
             var contactEntity = await _contactQuery.GetByIdAsync(id);
             return contactEntity?.ToModel();
         }
-
+        
         public async Task<ContactModel> CreateAsync(ContactModel contact)
         {
             var contactEntity = contact.ToEntity();
@@ -41,6 +41,16 @@ namespace BusinessLayer.Services
         {
             var contactEntity = await _contactQuery.GetByEmailAddressAsync(emailAddress);
             return contactEntity?.ToModel();
+        }
+
+        public bool ContactDataIsValidRegardingType(ContactModel contact)
+        {
+            if (contact.Type.Equals(ContactType.EMPLOYEE) && !string.IsNullOrEmpty(contact.Vat))
+                return false;
+            if (contact.Type.Equals(ContactType.FREELANCE) && string.IsNullOrEmpty(contact.Vat))
+                return false;
+
+            return true;
         }
     }
 }

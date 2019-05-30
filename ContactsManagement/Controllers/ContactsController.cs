@@ -24,11 +24,14 @@ namespace ContactsManagement.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            if (! _contactService.ContactDataIsValidRegardingType(contact))
+                return BadRequest("The contact must have a VAT number only if its type is freelance");
+
             var contactExists = await _contactService.GetByEmailAddressAsync(contact.EmailAddress);
 
             if (!(contactExists is null))
                 return Conflict($"A contact with the email address '{contact.EmailAddress}' already exist");
-
+            
             var createdContact = await _contactService.CreateAsync(contact);
 
             return Created($"/contacts/{createdContact.Id}", createdContact);
@@ -42,6 +45,9 @@ namespace ContactsManagement.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            if (!_contactService.ContactDataIsValidRegardingType(contact))
+                return BadRequest("The contact must have a VAT number only if its type is freelance");
 
             var contactExists = await _contactService.GetByIdAsync(id);
 
