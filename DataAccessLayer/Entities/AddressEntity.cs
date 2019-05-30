@@ -5,7 +5,6 @@ namespace DataAccessLayer.Entities
     public class AddressEntity
     {
         public int Id { get; set; }
-        public bool MainAddress { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
         public int PostCode { get; set; }
