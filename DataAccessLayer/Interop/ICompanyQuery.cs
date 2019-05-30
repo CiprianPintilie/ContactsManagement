@@ -5,8 +5,8 @@ namespace DataAccessLayer.Interop
 {
     public interface ICompanyQuery
     {
-        Task<CompanyEntity> GetCompanyByIdAsync(int id);
-        Task<CompanyEntity> GetCompanyByNameAsync(string name);
-        Task<CompanyEntity> GetCompanyByVatAsync(string vat);
+        Task<CompanyEntity> GetByIdAsync(int id);
+        Task<CompanyEntity> GetByNameAsync(string name);
+        Task<CompanyEntity> GetByVatAsync(string vat);
     }
 }

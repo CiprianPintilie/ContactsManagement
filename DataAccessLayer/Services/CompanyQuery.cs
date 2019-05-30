@@ -15,19 +15,19 @@ namespace DataAccessLayer.Services
             _context = context;
         }
 
-        public async Task<CompanyEntity> GetCompanyByIdAsync(int id)
+        public async Task<CompanyEntity> GetByIdAsync(int id)
         {
             return await _context.Company.FindAsync(id);
         }
 
-        public async Task<CompanyEntity> GetCompanyByNameAsync(string name)
+        public async Task<CompanyEntity> GetByNameAsync(string name)
         {
             return await _context.Company
                 .Where(c => c.Name.Equals(name))
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<CompanyEntity> GetCompanyByVatAsync(string vat)
+        public async Task<CompanyEntity> GetByVatAsync(string vat)
         {
             return await _context.Company
                 .Where(c => c.Vat.Equals(vat))

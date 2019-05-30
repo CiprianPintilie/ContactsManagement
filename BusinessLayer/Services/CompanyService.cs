@@ -21,7 +21,7 @@ namespace BusinessLayer.Services
 
         public async Task<CompanyModel> GetByIdAsync(int id)
         {
-            var company = await _companyQuery.GetCompanyByIdAsync(id);
+            var company = await _companyQuery.GetByIdAsync(id);
 
             return company?.ToModel();
         }
@@ -41,8 +41,8 @@ namespace BusinessLayer.Services
 
         public async Task<bool> CompanyDataConflictsAsync(string name, string vat)
         {
-            var companySearchedByName = await _companyQuery.GetCompanyByNameAsync(name);
-            var companySearchedByVat = await _companyQuery.GetCompanyByVatAsync(vat);
+            var companySearchedByName = await _companyQuery.GetByNameAsync(name);
+            var companySearchedByVat = await _companyQuery.GetByVatAsync(vat);
 
             return !(companySearchedByName is null) || !(companySearchedByVat is null);
         }
