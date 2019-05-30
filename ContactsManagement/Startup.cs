@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using ContactsManagement.AppStart;
+using ContactsManagement.Owin;
 using DataAccessLayer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +41,8 @@ namespace ContactsManagement
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseMiddleware(typeof(CustomErrorHandlingMiddleware));
+
             app.UseSwagger();
             app.UseSwaggerUI(options =>
                 options.SwaggerEndpoint(Configuration.GetSection("Swagger:Uri").Value, "Contacts management API"));
